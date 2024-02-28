@@ -21,7 +21,7 @@ class controller extends model{
                     $requested_data = $this->insert("users",$data);
                     return json_encode($requested_data);
                 };
-                $data = $this->api_callback($func);
+                $data = $this->post_api_callback($func);
                 header("content-type: application/json");
                 print_r($data);
                 break;
@@ -35,7 +35,17 @@ class controller extends model{
                     $requested_data = $this->select("users",['*'],$data);
                     return json_encode($requested_data);
                 };
-                $data = $this->api_callback($func);
+                $data = $this->post_api_callback($func);
+                header("content-type: application/json");
+                print_r($data);
+                break;
+            }
+            case "public/api/getalldata":{
+                $func = function(){
+                    $requested_data = $this->select("users",['*'],['1'=>'1']);
+                    return json_encode($requested_data);
+                };
+                $data = $this->post_api_callback($func);
                 header("content-type: application/json");
                 print_r($data);
                 break;
@@ -47,7 +57,7 @@ class controller extends model{
         }
 
     }
-    function api_callback($func){
+    function post_api_callback($func){
         if(isset($_POST)){
                    
             $is_emty = $this->chack_data_not_empty($_POST);
@@ -59,6 +69,10 @@ class controller extends model{
         }else{
             return json_encode(["data"=>NULL,"error"=>"USE POST METHODE","status"=>400]);
         };
+    }
+    function get_api_callback($func){
+        $data = $func();
+        return $data;
     }
     public function chack_data_not_empty($arr){
         $emty=array();

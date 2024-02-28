@@ -69,12 +69,13 @@ class model{
         }
     }
     public function get_all_data_query($query_data){
-       
-        $data = array();
+       $data = array();
+        $arr = array();
         while($a = $query_data->fetch_object()){
             foreach ($a as $key => $value){
-                $data[$key]=$value;
+                $arr[$key]=$value;
             };
+            array_push($data , $arr);
         }
         return $data;
     }

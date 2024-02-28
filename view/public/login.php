@@ -1,4 +1,5 @@
 <h1>LOGIN PAGE</h1>
+<a href="http://localhost/clones/test2/public/home">HOME</a>
 <form enctype="multipart/form-data" method="post" id="login_user">
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
@@ -11,7 +12,7 @@
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
+<button id="getalldata"> GET ALL DATA </button>
 <script>
     $(document).ready(function(){
         $("#login_user").submit(function(event){
@@ -32,6 +33,26 @@
                     if(result.status == 200){
                         window.location.href="http://localhost/clones/test2/public/home"
                     }   
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $("#getalldata").click(function(event){
+            event.preventDefault();
+            console.log("inform");
+            let url = "http://localhost/clones/test2/public/api/getalldata";
+            jQuery.ajax({
+                url:url,
+                type:"GET",
+                processData:false,
+                contentType:false,
+                cache:false,
+                success:function(result){
+                    console.log(result);
+                    console.table(result);
                 }
             });
         });
