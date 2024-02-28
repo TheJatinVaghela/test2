@@ -32,7 +32,20 @@ class model{
         $query_data = $this->simple_run_query($sql);
         return $query_data;
     }
-    
+    protected function select($tbl,$what,$where){
+        $sql = "SELECT ";
+        foreach($what as $key => $value){
+            $sql .= "$value ,";
+        };
+        $sql = substr($sql,0,-1);
+        $sql .= "FROM $tbl WHERE";
+        foreach($where as $key => $value){
+            $sql .= " $key = '$value' AND";
+        };
+        $sql = substr($sql,0,-3);
+        $query_data = $this->get_all_run_query($sql);
+        return $query_data;
+    }
     public function simple_run_query($query){
         try {
             $query_data = $this->con->query($query);
@@ -42,22 +55,26 @@ class model{
         };
         
     }
-    public function get_all_run_query($query) : array{
+    public function get_all_run_query($query){
         try {
             $query_data = $this->con->query($query);
             if($query_data->num_rows <= 0) {
                 return ["data"=>NULL,"message"=>"There Is no Data Available","status"=>200,"error"=>NULL];
             };
+            
             $data = $this->get_all_data_query($query_data);
             return ["data"=>$data,"message"=>"success","status"=>200,"error"=>null];
         } catch (\Exception $e) {
             return ["data"=>NULL,"error"=>$e->getMessage(),"status"=>500];
         }
     }
-    public function get_all_data_query($query_data) : array{
+    public function get_all_data_query($query_data){
+       
         $data = array();
         while($a = $query_data->fetch_object()){
-            $data[$a];
+            foreach ($a as $key => $value){
+                $data[$key]=$value;
+            };
         }
         return $data;
     }

@@ -26,14 +26,21 @@ class controller extends model{
                 print_r($data);
                 break;
             }
-            case "public/api/login-user":{
-                
-                break;
-            }
             case "public/login":{
-                echo "LOGIN PAGE";
+                $this->public_view("../view/public/login.php");
                 break;
             }
+            case "public/api/login-user":{
+                $func = function($data){
+                    $requested_data = $this->select("users",['*'],$data);
+                    return json_encode($requested_data);
+                };
+                $data = $this->api_callback($func);
+                header("content-type: application/json");
+                print_r($data);
+                break;
+            }
+            
             default:
                 echo "<h1>GO HOME</h1>";
                 break;
