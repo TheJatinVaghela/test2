@@ -14,6 +14,7 @@ class controller extends model{
         };
         switch ($path) {
             case 'public/home':
+                $this->print_stuf($_SESSION['user_id']);
                 $this->public_view("../view/public/home.php");
                 break;
             case "public/api/adduser":{
@@ -36,6 +37,8 @@ class controller extends model{
                     return json_encode($requested_data);
                 };
                 $data = $this->post_api_callback($func);
+                $save = json_decode($data);
+                $_SESSION['user_id'] = $save->data[0]->user_id;
                 header("content-type: application/json");
                 print_r($data);
                 break;

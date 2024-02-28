@@ -13,6 +13,7 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <button id="getalldata"> GET ALL DATA </button>
+
 <script>
     $(document).ready(function(){
         $("#login_user").submit(function(event){
@@ -29,9 +30,9 @@
                 cache:false,
                 success:function(result){
                     console.log(result);
-                    console.table(result);
+                    // console.table(result);
                     if(result.status == 200){
-                        window.location.href="http://localhost/clones/test2/public/home"
+                         window.location.href="http://localhost/clones/test2/public/home"
                     }   
                 }
             });

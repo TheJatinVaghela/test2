@@ -82,7 +82,7 @@ class model{
     public function print_stuf($stuf){
         echo "<pre>";
         print_r($stuf);
-        echo "<pre>";
+        echo "</pre>";
     }
 
 }
